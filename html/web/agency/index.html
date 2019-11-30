@@ -1,0 +1,697 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <title>青衫跳转</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            font-family:PingFang SC;
+        }
+        .header{
+            position: fixed;
+            top: 0;
+            height: 1.4rem;
+            line-height: 1.4rem;
+            background: #232A34;
+            width: 100%
+        }
+        nav{
+            width: 80%;
+            margin: 0 auto;
+        }
+        .logo {
+            float: left;
+            padding-top: .2rem;
+        }
+        .logo img{
+            width: 3rem;
+            vertical-align: top;
+        }
+        .nav,.minNav{
+            float: right;
+        }
+        .nav div{
+            float: left;
+        }
+        .tab{
+            width: 2rem;
+            height: 1.4rem;
+        }
+        .tab div{
+            color: #ABAAAA;
+            font-size: 8px;
+            line-height: 1.4rem;
+            width: 100%;
+            text-align: center;
+            cursor: pointer;
+        }
+        .tab div:hover{
+            color: #FFFFFF !important;
+        }
+        .nav .tab:nth-child(1) div,.pullDown .tab:nth-child(1) div{
+            color: #FFFFFF;
+        }
+        .minNav{
+            position: relative;
+            width: 3rem;
+            height: 1rem;
+            padding-top: .5rem;
+            text-align: right;
+        }
+        .minNav img{
+            width: 1rem;
+            height: 1rem;
+        }
+        .pullDown{
+            position: absolute;
+            top: 1.8rem;
+            left: 1rem;
+            display: none;
+            background: #232A34;
+            padding-bottom: .3rem;
+        }
+        .pullDown .tab{
+            width: 3rem;
+            height: 1rem;
+            font-size: 8px;
+        }
+        /* 首页 */
+        .titleBg,.titleBg img{
+            height: 11rem;
+            width: 100%;
+            background: url('img/bg.png') no-repeat;
+            object-fit:cover
+        }
+        .titleBg>div:nth-child(1),.apiBg>div:nth-child(1){
+            width: 80%;
+            margin-left: 10%;
+        }
+        .titleBar {
+            height: 5rem;
+            line-height: 6rem;
+            font-size: 1rem;
+            color:#FFFFFF;
+            font-weight:bold;
+        }
+        .titleBg .titleSynopsis{
+            height: 2rem;
+            font-size: .6rem;
+            color:#FFFFFF;
+        }
+        .conversion{
+            display: flex;
+        }
+        .conversion>div{
+            width: 50%;
+        }
+        .conversion textarea{
+            width: 90%;
+            min-height: 1.5rem;
+            border-radius: .1rem;
+            font-size: .3rem;
+        }
+        .generate{
+            width: 6rem;
+            background: #05A081;
+            height: 1.2rem;
+            text-align: center;
+            line-height: 1.2rem;
+            color: #fff;
+            border-radius: .1rem;
+            margin: .2rem auto;
+            font-size: .6rem;
+            cursor: pointer;
+        }
+        .share{
+            background: #FFFFFF;
+        }
+        .share>div:nth-child(1){
+            height: 1.8rem;
+            line-height: 1.8rem;
+            text-align: center;
+            font-size: .8rem;
+            font-weight:bold;
+        }
+        .share>div:nth-child(2),.share>div:nth-child(4),.share>div:nth-child(6){
+            max-width: 20rem;
+            margin: 0 auto;
+            font-size: .4rem;
+            color: #6E6D6D;
+            padding: 0 3rem;
+            text-align: center
+        }
+        .share>div:nth-child(3),.share>div:nth-child(5){
+            width: 10rem;
+            margin: 0 auto;
+            font-size: .5rem;
+            color: #1A1A1A;
+            text-align: center;
+            margin-top: .6rem;
+            margin-bottom: .4rem;
+        }
+        .share>div:nth-child(3) img,.share>div:nth-child(5) img{
+            width: .5rem;
+            margin-right: .3rem;
+            vertical-align: middle;
+        }
+        .flow{
+            background: #05A081;
+            margin-top: 2rem;
+            width: 100%;
+        }
+        .flow>div:nth-child(1){
+            height: 1.4rem;
+            line-height: 2rem;
+            color: #fff;
+            text-align: center;
+            font-size: .4rem;
+        }
+        .flow>div:nth-child(2){
+            width: 1rem;
+            height: .1rem;
+            margin: 0 auto;
+            background: #fff;
+            margin-top: .1rem;
+        }
+        .flowStrip{
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content:center;
+            margin-top: 1rem;
+        }
+        .flowItem{
+            width: 8rem;
+            background: #fff;
+            margin-bottom: .6rem;
+            
+        }
+        .flowItem>div:nth-child(1){
+            height: 2rem;
+            line-height: 3rem;
+            text-align: center;
+        }
+        .flowItem>div:nth-child(1) img{
+            width: 1.4rem;
+        }
+        .flowItem>div:nth-child(2){
+            color: #6E6D6D;
+            height: 1.4rem;
+            line-height: 1.4rem;
+            text-align: center;
+            font-size: .5rem;
+        }
+        .flowItem>div:nth-child(3){
+            color: #6E6D6D;
+            height: 1.4rem;
+            line-height: 1.4rem;
+            text-align: center;
+            font-size: .4rem;
+        }
+        .point{
+            width: 1.2rem;
+            display: flex;
+            height: 100%;
+            justify-content:center;
+            align-items: center;
+            
+        }
+        .point img{
+            width: .8rem;
+        }
+        .transverter,.promptBox{
+            width: 16rem;
+            height: 10rem;
+            border: 1px solid #ccc;
+            background: #fff;
+            position: fixed;
+            top: 5rem;
+            text-align: center;
+            left: 50%;
+            transform: translate(-50%, 10px);
+            display: none;
+        }
+        .transverterImg{
+            width: 6rem;
+            height: 6rem;
+            margin: 0 auto;
+            background: #FFFFFF no-repeat;
+            background-size: 6rem 6rem;
+        }
+        
+        .transverter>div:nth-child(1),.promptBox>div:nth-child(1){
+            position: relative;
+            color: #fff;
+            font-size: .4rem;
+            height: 1rem;
+            line-height: 1rem;
+            text-align: left;
+            padding-left: 1.1rem;
+            background: #05A081 url('img/msg.png') .2rem .2rem no-repeat;
+            background-size: .7rem;
+        }
+        
+        .transverter>p>a{
+            font-size: .5rem;
+        }
+        .mistake{
+            position: absolute;
+            width: .8rem;
+            height: .6rem;
+            right: .3rem;
+            top: .1rem;
+            font-size: .5rem;
+            text-align: center;
+            line-height: .7rem;
+            cursor: pointer;
+            
+        }
+        .promptBox>div:nth-child(2){
+            height: 6rem;
+            line-height: 6rem;
+            text-align: center;
+            padding: 1rem;
+            color: #FFFFFF;
+            font-size: .4rem;
+        }
+        .promptMsg{
+            color: #000 !important;
+        }
+        footer{
+            background: #232A34;
+            height: 2rem;
+        }
+        .thatUrl{
+            font-size: .4rem !important;
+        }
+        /* api接口 */
+        .apiPort, .more{
+            display: none;
+            height: 100vh;
+        }
+        .apiBg,.moreBg{
+            background: url('img/apibg.png') no-repeat;
+            height: calc(100% - 2rem);
+            width: 100%;
+            object-fit:cover
+        }
+        .apiBg .titleSynopsis{
+            color: #FFFEFE;
+            font-size: .4rem;
+            max-width: 30rem;
+            letter-spacing:.1rem;
+        }
+        /* 源码 */
+        .soundCode,.relation{
+            display: none;
+        }
+        .soundCode>div:nth-child(1),.relation>div:nth-child(1){
+            height: 1.4rem;
+            background: #232A34;
+        }
+        .soundCode>div:nth-child(2),.relation>div:nth-child(2){
+            font-size: 1rem;
+            text-align: center;
+            height: 2.4rem;
+            line-height: 3rem;
+        }
+        .soundCode>div:nth-child(3),.relation>div:nth-child(3){
+            width: 1rem;
+            height: .1rem;
+            background: #0099FF;
+            margin: 0 auto;
+        }
+        .soundCode>div:nth-child(4),.relation>div:nth-child(4){
+            width: 4rem;
+            margin: 0 auto;
+            border-top: 1px solid #bbb;
+        }
+        .soundCode>div:nth-child(5){
+            text-align: center;
+            height: 2rem;
+        }
+        .soundCode>div:nth-child(5) span{
+            background: #05A081;
+            color: #fff;
+            font-size: .4rem;
+            font-weight:bold;
+            padding: .2rem 2rem;
+            border-radius: .1rem;
+        }
+        .soundCode>div:nth-child(6){
+            width: 80%;
+            margin: 0 auto;
+            color: #6E6D6D;
+            font-size: .4rem;
+        }
+        .soundCode>div:nth-child(7){
+            background: #05A081;
+            height: 5rem;
+            margin-top: 1.4rem;
+        }
+        /* 其他产品 */
+        .moreBg{
+            box-sizing: border-box;
+            padding-top: 3rem;
+            padding-left: 10%;
+            padding-right: 10%;
+
+        }
+        .moreBg>div:nth-child(1),.moreBg>div:nth-child(3),.moreBg>div:nth-child(5){
+            font-size: .8rem;
+            color: #FFFFFF;
+            min-height: 1.8rem;
+            line-height: 1.8rem;
+            font-weight:bold;
+        }
+        .moreBg>div:nth-child(2),.moreBg>div:nth-child(4),.moreBg>div:nth-child(6){
+            min-height: 1.4rem;
+            line-height: 1rem;
+            font-size: .5rem;
+            color: #FFFEFE;
+            padding-left: .8rem;
+        }
+
+        /* 联系我们 */
+        .relation>div:nth-child(5),.relation>div:nth-child(6){
+            color: #6E6D6D;
+            text-align: center;
+            font-size: .4rem;
+            height: 1rem;
+            line-height: 1.4rem;
+
+        }
+        .relation>div:nth-child(7){
+            width: 8rem;
+            margin: 0 auto;
+            min-height: 12rem
+        }
+        .relation>div:nth-child(8){
+            background: #05A081;
+            height: 5rem;
+            margin-top: 1.4rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <nav>
+            <div class="logo">
+                <img src="img/logo.png">
+            </div>
+            <div class="nav">
+                <div class="tab">
+                    <div>首页</div>
+                </div>
+                <div class="tab">
+                    <div>API接口</div>
+                </div>
+                <div class="tab">
+                    <div>源码</div>
+                </div>
+                <div class="tab">
+                    <div>其他产品</div>
+                </div>
+                <div class="tab">
+                    <div>联系我们</div>
+                </div>
+            </div>
+            <div class="minNav">
+                <img  src="img/breviary.png">
+                <div class="pullDown">
+                    <div class="tab">
+                        <div>首页</div>
+                    </div>
+                    <div class="tab">
+                        <div>API接口</div>
+                    </div>
+                    <div class="tab">
+                        <div>源码</div>
+                    </div>
+                    <div class="tab">
+                        <div>其他产品</div>
+                    </div>
+                    <div class="tab">
+                        <div>联系我们</div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- 首页 -->
+    <div class="home">
+        <div class="titleBg">
+            <div>
+                <div class="titleBar">微信内APP跳转技术-域名防封</div>
+                <div class="titleSynopsis">只需在下面要将您的域名生成新的短链接域名，复制生成后的网址推广即可</div>
+                <div class="conversion">
+                    <div>
+                        <textarea class="thatUrl" placeholder="请输入需要跳转的网址链接" name="请输入需要跳转的网址链接" id=""></textarea>
+                    </div>
+                    <div>
+                        <div class="generate">生成网址</div>
+                    </div>
+                </div>
+                <div class="transverter">
+                    <div> 生成网址<div class="mistake">X</div></div>
+                    <p><a href="#"></a></p>
+                    <div class="transverterImg"></div>
+                </div>
+
+                <div class="promptBox">
+                    <div> 提示信息<div class="mistake">X</div></div>
+                    <div class="promptMsg"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="share">
+            <div >快速分享安装</div>
+            <div>微信跳转外部浏览器下载app/打开指定链接,大幅度降低安装过程的用户流失率,再也不怕域名被封</div>
+            <div><img src="img/correct.png"> 告别右上角“打开浏览器”</div>
+            <div>无需进行右上角的浏览器中打开的操作做即可查看分享链接内容高效优化APP安装流程，助力运营推广。</div>
+            <div><img src="img/correct.png"> 一键唤醒APP到指定位置</div>
+            <div>无需进行右上角在浏览器中打开的操作做即可查看分享链接内容，高效优化APP安装流程，助力APP运营推广。</div>
+        </div>
+
+        <div class="flow">
+            <div>快速接入流程</div>
+            <div></div>
+            <div class="flowStrip">
+                <div class="flowItem">
+                    <div><img src="img/download.png"></div>
+                    <div>步骤一</div>
+                    <div>输入需要的微信中打开的网址链接</div>
+                </div>
+                <div class="point"><img src="img/jt2.png" alt=""></div>
+                <div class="flowItem">
+                    <div><img src="img/sdk.png"></div>
+                    <div>步骤二</div>
+                    <div>点击生成按钮，生成转换后的链接和二维码</div>
+                </div>
+                <div class="point"><img src="img/jt2.png" alt=""></div>
+                <div class="flowItem">
+                    <div><img src="img/distribute.png"></div>
+                    <div>步骤三</div>
+                    <div>复制生成后的链接或者扫一扫二维码即可</div>
+                </div>
+                <div class="point"></div>
+            </div>
+        </div>
+        <footer></footer>
+    </div>
+    <!-- api接口 -->
+    <div class="apiPort">
+            <div class="apiBg">
+                <div>
+                    <div class="titleBar">微信跳转技术</div>
+                    <div class="titleSynopsis">
+                            购买开通后，用户可任意调用此接口，已达到跳转浏览器的要求。
+                            API接口介绍：正式版接口地址 (GET) http://www.xxx.cn/jump?url=URL 形式。
+                            用户只需在我方配置好的接口URL处填写好自己的推广链接。服务器接受到指令后，返回跳转链接。
+                            推广时推广接口返回的链接即可。
+                            公司其他产品技术：苹果企业签名，超级签名，短信发送...
+                    </div>
+                </div>
+            </div>
+            <footer></footer>
+    </div>
+
+    <!-- 源码 -->
+    <div class="soundCode">
+        <div class="soundNav"></div>
+        <div>价格明细</div>
+        <div></div>
+        <div></div>
+        <div><span>无任何后续费用、不限网站类型、不限下载</span></div>
+        <div>
+            　　基于微信接口开发了一款全新的手机端微信中推广助手，用户在微信中点击的话，可以实现微信中点击链接直接跳转手机默认浏览器打开指定链接
+                购买源码的朋友，我方会有技术人员跟贵公司对接改动。我方提供多种形式的方案。请各位自行对照或者联系客服选择适合的套餐！<br/>
+                　　1、微信自动跳转浏览器核心源码版 
+                源码内容：此套餐内容为微信跳转浏览器核心源码，源码内置基础微信域名防封功能。推荐拥有一定技术功底的朋友购买使用！
+                适用人群：需要将微信跳转浏览器功能内嵌到自己程序内，实现程序内生成的链接或分享的链接在微信中点击，实现跳转浏览器下载的功能！<br/>
+                　　2、微信自动跳转浏览器商业版
+                源码内容：商业版包含基础微信域名防封功能、一个独立管理的后台、后台下载落地页管理、多用户登录、数据统计等功能。后台下载落地页可随时更换，可随意添加生成下载链接。（用户需自行准备一台服务器）<br/>
+                　　核心源码价格20000元<br/>
+                　　商业版带后台40000元<br/>
+                适用人群：不懂技术、拥有自己的推广代理团队、大量推广链接在微信中被屏蔽的用户使用。
+        </div>
+        <div></div>
+    </div>
+
+    <!-- 其他产品 -->
+    <div class="more">
+        <div class="moreBg">
+            <div>微信跳转技术</div>
+            <div>本站承诺所有产品保质保量，让您体验用最低价格享受VIP的服务。</div>
+            <div>苹果企业签名</div>
+            <div>苹果签名高效稳定，24小时在线客服为您服务。</div>
+            <div>微信域名解封</div>
+            <div>微信域名防封，解封技术，解除您因推广域名经常被封的烦恼。</div>
+        </div>
+        <footer></footer>
+    </div>
+
+    <!-- 联系我们 -->
+    <div class="relation">
+        <div class="soundNav"></div>
+        <div>联系我们</div>
+        <div></div>
+        <div></div>
+        <div>请添加在线客服QQ：xxxxxxxxxx</div>
+        <div>或扫描二维码联系我们</div>
+        <div></div>
+        <div></div>
+    </div>
+    
+</body>
+<script>
+   (function(){
+        var calc = function(){
+            var docElement = document.documentElement;
+            var clientWidthValue = docElement.clientWidth > 750 ? 750 : docElement.clientWidth;
+            docElement.style.fontSize = 20*(clientWidthValue/375) + 'px';
+            if(docElement.clientWidth < 700){
+                alterCss(1)
+            } else {
+                alterCss(2)
+            }
+        }
+        calc();
+        window.addEventListener('resize',calc)
+
+        $('.tab').on('click', function(){
+            $('.tab div').css({'color':'#ABAAAA'})
+            $(this).find('div').css({'color':'#fff'})
+            $('.pullDown').css({'display':'none'})
+            if($(this).find('div').text() == '首页'){
+                $('.apiPort').css({'display':'none'})
+                $('.home').css({'display':'block'})
+                $('.soundCode').css({'display':'none'})
+                $('.more').css({'display':'none'})
+                $('.relation').css({'display':'none'})
+            }else if($(this).find('div').text() == 'API接口'){
+                $('.apiPort').css({'display':'block'})
+                $('.home').css({'display':'none'})
+                $('.soundCode').css({'display':'none'})
+                $('.more').css({'display':'none'})
+                $('.relation').css({'display':'none'})
+            }else if($(this).find('div').text() == '源码'){
+                $('.soundCode').css({'display':'block'})
+                $('.home').css({'display':'none'})
+                $('.apiPort').css({'display':'none'})
+                $('.more').css({'display':'none'})
+                $('.relation').css({'display':'none'})
+            }else if($(this).find('div').text() == '其他产品'){
+                $('.more').css({'display':'block'})
+                $('.home').css({'display':'none'})
+                $('.apiPort').css({'display':'none'})
+                $('.soundCode').css({'display':'none'})
+                $('.relation').css({'display':'none'})
+            }else if($(this).find('div').text() == '联系我们'){
+                $('.relation').css({'display':'block'})
+                $('.home').css({'display':'none'})
+                $('.apiPort').css({'display':'none'})
+                $('.soundCode').css({'display':'none'})
+                $('.more').css({'display':'none'})
+            }
+            
+        })
+        $('.minNav img').on('click', function(){
+            $('.pullDown').css({'display':'block'})
+        })
+        $('.transverter .mistake').on('click', function(){
+            $('.transverter').css({'display':'none'})
+        })
+        $('.promptBox .mistake').on('click', function(){
+            $('.promptBox').css({'display':'none'})
+        })
+        $('.generate').on('click', function(){
+            generateuri()
+        })
+    })()
+    function alterCss(v){
+        if(v == 1){
+            $('.nav').css({'display':'none'})
+            $('.minNav').css({'display':'block'})
+            $('.logo img').css({'width':'5rem'})
+            $('.point').css({'display':'none'})
+            $('.flowItem').css({'width':'14rem'})
+            $('.soundNav').css({'height':'2rem'})
+            $('.header').css({'height':'2rem'})
+        }
+        if(v == 2) {
+            $('.nav').css({'display':'block'})
+            $('.minNav').css({'display':'none'})
+            $('.logo img').css({'width':'3rem'})
+            $('.point').css({'display ':'block'})
+            $('.flowItem').css({'width':'8rem'})
+            $('.soundNav').css({'height':'1.4rem'})
+            $('.header').css({'height':'1.4rem'})
+        }
+    }
+    function generateuri(){
+        if($('.thatUrl').val() == ''){
+            $('.promptMsg').text('请填写网址，如http://www.xxxx.com')
+            $('.promptBox').css({'display':'block'})
+            return
+        }else{
+            var reg = /^((ht|f)tps?):\/\/[\w\-]+(\.[\w\-]+)+([\w\-.,@?^=%&:\/~+#]*[\w\-@?^=%&\/~+#])?$/;
+ 　　　　   if (!reg.test($(".thatUrl").val())) {
+        　　　   $('.promptMsg').text('请填写正确的网址，如http://www.xxxx.com')
+                $('.promptBox').css({'display':'block'})
+        　　　　　return
+        　　}
+        }
+        var url = '/web/create'
+        var data2 = {
+            url: $('.thatUrl').val()
+        }
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'JSON',
+            contentType: 'application/json',
+            data: JSON.stringify(data2),
+            success: function(data){
+                if(data.code == 200){
+                    $('.transverter').css({'display':'block'})
+                    $('.transverter a').text(data.data.code)
+                    $('.transverter a').attr('href',data.data.code)
+                    $('.transverterImg').css('backgroundImage','url(' + data.data.picPath + ')')
+                }else{
+                    $('.promptMsg').text(data.msg)
+                    $('.promptBox').css({'display':'block'})
+                }
+            }
+        })
+    }
+</script>
+</html>

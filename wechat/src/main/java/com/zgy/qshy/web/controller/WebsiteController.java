@@ -25,7 +25,7 @@ public class WebsiteController extends BaseController<Website, IWebsiteService> 
     QRCodeUtil qrCodeUtil;
 
     @ApiOperation(value = "根据参数获取真实url跳转真实的网站地址")
-    @GetMapping("/{url}/")
+    @GetMapping("/{url}")
     public Object exchange(@PathVariable("url") String url ,ModelMap modelMap) {
         if (StringUtils.isEmpty(url)) {
             return setModelMap(HttpCode.NOT_ACCEPTABLE.value(),"请输入网址!");

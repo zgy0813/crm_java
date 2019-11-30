@@ -35,8 +35,8 @@ server:
 
 qr-code:
   #ip: http://192.168.0.185/
-  ip : http://127.0.0.1:9000/
-  rootPath: /home/url_exchange_nginx/web
+  ip : http://192.168.0.108/
+  rootPath: D:/project/qshy/crm/html/web
   path: /pic/
   ext: PNG
   size: 350

@@ -12,6 +12,9 @@ spring:
     multipart:
       max-file-size: 2048MB
       max-request-size: 2048MB
+  application:
+    name: wechat
+
 #  redis:
 #    database: 0 # Redis数据库索引（默认为0）
 #    host: 127.0.0.1 # Redis服务器地址
@@ -40,3 +43,11 @@ qr-code:
   path: /pic/
   ext: PNG
   size: 350
+
+# 配置eureka
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9000/eureka/
+  instance:
+    prefer-ip-address: true

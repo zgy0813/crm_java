@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Main-Class: com.zgy.qshy.UrlChangeApplication
+Main-Class: com.zgy.wechat.UrlChangeApplication
 Class-Path: druid-1.0.29.jar tomcat-embed-el-9.0.22.jar jackson-databind
  -2.9.9.jar netty-common-4.1.38.Final.jar jcommander-1.48.jar jackson-da
  tatype-jsr310-2.9.9.jar spring-web-5.1.9.RELEASE.jar spring-boot-starte

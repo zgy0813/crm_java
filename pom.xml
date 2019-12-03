@@ -9,9 +9,9 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>common</module>
         <module>wechat</module>
         <module>eureka_server</module>
+        <module>config_server</module>
     </modules>
 
     <parent>
@@ -21,8 +21,13 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-
-
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
     <!-- cloud -->
     <dependencyManagement>
